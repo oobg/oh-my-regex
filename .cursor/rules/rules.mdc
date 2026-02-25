@@ -1,0 +1,19 @@
+---
+description: Table of contents and short description of each regexly project rule file
+globs: "**/*"
+alwaysApply: true
+---
+
+# regexly project rules (table of contents)
+
+This project follows the rules defined in the files below. When editing or adding code, adhere to these rules.
+
+| File | Description |
+|------|-------------|
+| [comments-english](comments-english/rules.mdc) | All source comments and docs in English |
+| [extensibility](extensibility/rules.mdc) | Extensibility design, interfaces, anyOf/not etc. |
+| [tree-shaking](tree-shaking/rules.mdc) | File-level exports, barrel re-exports, sideEffects |
+| [framework-agnostic](framework-agnostic/rules.mdc) | Pure functions, framework-agnostic code |
+| [api-and-implementation](api-and-implementation/rules.mdc) | API table, ok() combined regex, report() per-predicate execution |
+
+Refer to each file for details. Update the relevant rule file when new conventions or edge cases are agreed during implementation.
