@@ -30,4 +30,15 @@ describe("edge cases", () => {
     expect(r.failed.map((f) => f.name)).toContain("hasUppercase");
     expect(r.passed).toHaveLength(0);
   });
+
+  it("startsWith combined with other predicates does not match mid-string", () => {
+    // "xhello1" starts with "x", not "hel" — combined regex must not allow (?=.*^hel)
+    expect(regexly("xhello1").startsWith("hel").hasNumber().ok()).toBe(false);
+    expect(regexly("hello1").startsWith("hel").hasNumber().ok()).toBe(true);
+  });
+
+  it("endsWith combined with other predicates does not match mid-string", () => {
+    expect(regexly("1hellox").endsWith("llo").hasNumber().ok()).toBe(false);
+    expect(regexly("1hello").endsWith("llo").hasNumber().ok()).toBe(true);
+  });
 });

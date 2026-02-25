@@ -90,7 +90,10 @@ export class Regexly {
       if (p.patternSource) {
         const fragment = p.patternSource(this.options);
         if (fragment !== "") {
-          parts.push(`(?=.*${fragment})`);
+          // Fragments anchored at ^ must not be prefixed with .* inside the lookahead;
+          // the outer ^ already places evaluation at position 0.
+          const lookahead = fragment.startsWith("^") ? `(?=${fragment})` : `(?=.*${fragment})`;
+          parts.push(lookahead);
         }
       }
     }
