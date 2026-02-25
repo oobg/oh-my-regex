@@ -62,4 +62,4 @@ regexly("a").hasNumber().hasLetter().explain();
 
 ## License
 
-MIT
+[MIT](./LICENSE)
