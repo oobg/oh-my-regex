@@ -64,15 +64,15 @@ export class Regexly {
   }
 
   startsWith(needle: string | RegExp): this {
-    return this.addPredicate(createStartsWith(needle, this.options));
+    return this.addPredicate(createStartsWith(needle));
   }
 
   endsWith(needle: string | RegExp): this {
-    return this.addPredicate(createEndsWith(needle, this.options));
+    return this.addPredicate(createEndsWith(needle));
   }
 
   includes(needle: string | RegExp): this {
-    return this.addPredicate(createIncludes(needle, this.options));
+    return this.addPredicate(createIncludes(needle));
   }
 
   raw(re: RegExp): this {
@@ -102,7 +102,7 @@ export class Regexly {
   ok(): boolean {
     for (const p of this.predicates) {
       if (!p.patternSource) {
-        if (!p.test(this.input)) return false;
+        if (!p.test(this.input, this.options)) return false;
       }
     }
     const combined = this.buildCombinedRegex();
@@ -118,7 +118,7 @@ export class Regexly {
     const passed: string[] = [];
     const failed: Array<{ name: string; message?: string }> = [];
     for (const p of this.predicates) {
-      if (p.test(this.input)) {
+      if (p.test(this.input, this.options)) {
         passed.push(p.name);
       } else {
         failed.push({ name: p.name });

@@ -16,11 +16,12 @@ export interface ChainOptions {
 
 /**
  * A single predicate: name, test function, and optional pattern source for combined regex.
- * - test(input): run this predicate alone (for report() and for non-combinable predicates).
+ * - test(input, options): run this predicate alone (for report() and for non-combinable predicates).
+ *   Receives chain options (e.g. caseInsensitive) so report() and ok() stay consistent.
  * - patternSource(options): return regex pattern fragment for combinable predicates; if absent, not combined.
  */
 export interface PredicateMeta {
   name: string;
-  test: (input: string) => boolean;
+  test: (input: string, options?: ChainOptions) => boolean;
   patternSource?: (options: ChainOptions) => string;
 }

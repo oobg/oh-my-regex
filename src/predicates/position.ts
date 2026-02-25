@@ -3,7 +3,7 @@ import { escapeForRegex } from "../utils/escape.js";
 
 function buildPositionPredicate(
   name: string,
-  testFn: (input: string) => boolean,
+  testFn: (input: string, options?: ChainOptions) => boolean,
   patternFragment: string | null
 ): PredicateMeta {
   return {
@@ -15,45 +15,45 @@ function buildPositionPredicate(
   };
 }
 
-export function createStartsWith(needle: string | RegExp, options?: ChainOptions): PredicateMeta {
+export function createStartsWith(needle: string | RegExp): PredicateMeta {
   return buildPositionPredicate(
     `startsWith(${needle instanceof RegExp ? needle.source : JSON.stringify(needle)})`,
-    (input) => {
+    (input, opts) => {
       if (typeof needle === "string" && needle === "") return true;
       const re =
         needle instanceof RegExp
           ? needle
-          : new RegExp(`^${escapeForRegex(needle)}`, options?.i ? "i" : "");
+          : new RegExp(`^${escapeForRegex(needle)}`, opts?.i ? "i" : "");
       return re.test(input);
     },
     typeof needle === "string" ? (needle === "" ? "" : `^${escapeForRegex(needle)}`) : null
   );
 }
 
-export function createEndsWith(needle: string | RegExp, options?: ChainOptions): PredicateMeta {
+export function createEndsWith(needle: string | RegExp): PredicateMeta {
   return buildPositionPredicate(
     `endsWith(${needle instanceof RegExp ? needle.source : JSON.stringify(needle)})`,
-    (input) => {
+    (input, opts) => {
       if (typeof needle === "string" && needle === "") return true;
       const re =
         needle instanceof RegExp
           ? needle
-          : new RegExp(`${escapeForRegex(needle)}$`, options?.i ? "i" : "");
+          : new RegExp(`${escapeForRegex(needle)}$`, opts?.i ? "i" : "");
       return re.test(input);
     },
     typeof needle === "string" ? (needle === "" ? "" : `${escapeForRegex(needle)}$`) : null
   );
 }
 
-export function createIncludes(needle: string | RegExp, options?: ChainOptions): PredicateMeta {
+export function createIncludes(needle: string | RegExp): PredicateMeta {
   return buildPositionPredicate(
     `includes(${needle instanceof RegExp ? needle.source : JSON.stringify(needle)})`,
-    (input) => {
+    (input, opts) => {
       if (typeof needle === "string" && needle === "") return true;
       const re =
         needle instanceof RegExp
           ? needle
-          : new RegExp(escapeForRegex(needle), options?.i ? "i" : "");
+          : new RegExp(escapeForRegex(needle), opts?.i ? "i" : "");
       return re.test(input);
     },
     typeof needle === "string" ? (needle === "" ? "" : escapeForRegex(needle)) : null
