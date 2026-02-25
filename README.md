@@ -38,6 +38,7 @@ End with:
 - **`ok()`** or **`test()`** — `true` if all conditions pass (AND).
 - **`report()`** — `{ ok, failed: [{ name, message? }], passed: string[] }`.
 - **`explain()`** — human-readable summary of what passed/failed.
+- **`build(options?)`** — returns the combined `RegExp` from combinable predicates, or `null` when there are none. Options: `{ global?: boolean }` to add the `g` flag. Use `.source` on the result for the pattern string.
 
 ## report() example
 
@@ -51,6 +52,16 @@ const r = regexly("ab").hasNumber().hasUppercase().report();
 ```ts
 regexly("a").hasNumber().hasLetter().explain();
 // "Failed: hasNumber. Passed: hasLetter"
+```
+
+## build() example
+
+```ts
+const re = regexly("x").hasNumber().hasLetter().build();
+// RegExp from combinable predicates; re.test("a1") === true
+
+regexly("x").build();                    // null (no combinable predicates)
+regexly("a1").hasNumber().build({ global: true });  // RegExp with "g" flag
 ```
 
 ## Notes

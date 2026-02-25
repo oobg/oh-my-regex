@@ -1,4 +1,4 @@
-import type { ChainOptions, PredicateMeta, Report } from "../types";
+import type { BuildOptions, ChainOptions, PredicateMeta, Report } from "../types";
 import {
   createHasNumber,
   createHasLetter,
@@ -100,6 +100,23 @@ export class Regexly {
     if (parts.length === 0) return null;
     const flags = this.options?.i ? "si" : "s";
     return new RegExp(`^${parts.join("")}.*$`, flags);
+  }
+
+  /**
+   * Returns the combined regex built from combinable predicates (same as used internally by ok()).
+   * Returns null when there are no combinable predicates (e.g. only minLength/maxLength/raw).
+   * For the pattern string only, use the returned RegExp's .source.
+   *
+   * @param options.global - When true, the returned RegExp includes the `g` flag for global matching.
+   */
+  build(options?: BuildOptions): RegExp | null {
+    const re = this.buildCombinedRegex();
+    if (re == null) return null;
+    if (options?.global) {
+      const flags = re.flags + (re.flags.includes("g") ? "" : "g");
+      return new RegExp(re.source, flags);
+    }
+    return re;
   }
 
   ok(): boolean {

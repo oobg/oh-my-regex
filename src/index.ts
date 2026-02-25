@@ -1,6 +1,6 @@
 import { Regexly } from "./core/Regexly";
 
-export type { Report } from "./types";
+export type { BuildOptions, Report } from "./types";
 export type { Regexly } from "./core/Regexly";
 
 /**

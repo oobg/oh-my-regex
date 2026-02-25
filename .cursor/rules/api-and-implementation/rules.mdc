@@ -9,6 +9,7 @@ alwaysApply: false
 - **Semantics**: MVP is **includes only** (substring/pattern "somewhere"); no full-string match semantics in MVP.
 - **ok() / test()**: Combine "combinable" predicates into one regex (lookaheads) and run once; run non-combinable (minLength, maxLength, raw) separately. All must pass (AND).
 - **report()**: Run each predicate **individually** to collect passed/failed; do not use the combined regex so failure reasons are available.
+- **build(options?)**: Terminal method that returns the combined RegExp from combinable predicates (same as used by ok()), or null when there are none. **BuildOptions**: `global?: boolean` — when true, the returned RegExp includes the `g` flag. Pattern string: use returned RegExp's `.source`.
 - **raw(re)**: Use the provided RegExp as-is; do not apply caseInsensitive or other options to it.
 - **startsWith/endsWith/includes**: When needle is string, escape it for regex; when RegExp, auto-add `^` (startsWith) or `$` (endsWith) anchor if not already present. `caseInsensitive()` does not apply to RegExp needles. Empty string needle: always pass.
 - **hasSymbol**: "At least one character that is not whitespace, digit, A–Z, a–z, or 가–힣" (e.g. `[^\s\dA-Za-z가-힣]`). Non-ASCII scripts are intentionally included as symbols in MVP.

@@ -15,6 +15,14 @@ export interface ChainOptions {
 }
 
 /**
+ * Options for build(): control how the combined regex is built.
+ * - global: when true, add the `g` flag to the returned RegExp (for global search/match).
+ */
+export interface BuildOptions {
+  global?: boolean;
+}
+
+/**
  * A single predicate: name, test function, and optional pattern source for combined regex.
  * - test(input, options): run this predicate alone (for report() and for non-combinable predicates).
  *   Receives chain options (e.g. caseInsensitive) so report() and ok() stay consistent.
