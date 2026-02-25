@@ -98,7 +98,7 @@ export class Regexly {
       }
     }
     if (parts.length === 0) return null;
-    const flags = this.options?.i ? "si" : "s";
+    const flags = this.options?.i ? "siu" : "su";
     return new RegExp(`^${parts.join("")}.*$`, flags);
   }
 
