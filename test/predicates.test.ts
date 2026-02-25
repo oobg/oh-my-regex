@@ -123,6 +123,16 @@ describe("raw", () => {
     expect(regexly("123").raw(/\d{3}/).ok()).toBe(true);
     expect(regexly("12").raw(/\d{3}/).ok()).toBe(false);
   });
+  it("multiple raw() are distinguished in report().failed by pattern snippet in name", () => {
+    const r = regexly("x").raw(/\d/).raw(/\w/).report();
+    expect(r.ok).toBe(false);
+    expect(r.failed).toHaveLength(1);
+    expect(r.passed).toHaveLength(1);
+    const names = r.failed.map((f) => f.name).concat(r.passed);
+    expect(names).toContain("raw(/\\d/)");
+    expect(names).toContain("raw(/\\w/)");
+    expect(names[0]).not.toBe(names[1]);
+  });
 });
 
 describe("caseInsensitive", () => {

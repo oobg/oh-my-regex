@@ -1,5 +1,6 @@
 /**
  * Result of report(): which predicates passed and which failed.
+ * - failed[].message: Optional; reserved for future use. MVP does not set this (only name is set).
  */
 export interface Report {
   ok: boolean;
