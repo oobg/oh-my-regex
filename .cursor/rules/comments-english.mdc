@@ -1,0 +1,5 @@
+# Comments and documentation in English
+
+- This is an open-source library. **All source comments and documentation must be in English.**
+- This includes: JSDoc, inline comments, TODO/FIXME messages, and user-facing docs (README, CHANGELOG).
+- Exception: Plan/spec documents used only internally may use another language if the team agrees.

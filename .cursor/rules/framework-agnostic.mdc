@@ -1,0 +1,6 @@
+# Framework-agnostic and functional style
+
+- Code must work in **Vue, React, SSR, CSR, and vanilla HTML** (and Node). No framework-specific APIs or DOM assumptions.
+- Use **pure functions** and avoid global mutable state.
+- No React/Vue imports, no browser-only APIs unless guarded. Prefer code that runs in both Node and browser (e.g. string/RegExp only).
+- The public API is a function `regexly(input: string)` returning a chain object; no framework bindings.

@@ -1,0 +1,6 @@
+# Tree-shaking and bundle size
+
+- **One export per file** for predicates and utils so bundlers can drop unused code.
+- **Barrel file** (`predicates/index.ts`): re-export only; no side effects or logic.
+- **package.json**: set `"sideEffects": false`.
+- Do not aggregate all predicates in a single module with side effects; keep them in separate files and re-export from the barrel.
