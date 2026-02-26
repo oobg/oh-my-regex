@@ -5,5 +5,5 @@ export { createHasLowercase } from "./hasLowercase";
 export { createHasLanguage } from "./hasLanguage";
 export { createHasSymbol } from "./hasSymbol";
 export { createMinLength, createMaxLength } from "./length";
-export { createStartsWith, createEndsWith, createIncludes } from "./position";
+export { createStartsWith, createEndsWith, createIncludes, createFind } from "./position";
 export { createRaw } from "./raw";
