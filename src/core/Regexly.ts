@@ -11,7 +11,6 @@ import {
   createStartsWith,
   createEndsWith,
   createIncludes,
-  createFind,
   createRaw,
 } from "../predicates/index";
 
@@ -74,10 +73,6 @@ export class Regexly {
 
   includes(needle: string | number | RegExp): this {
     return this.addPredicate(createIncludes(needle));
-  }
-
-  find(needle: string | number | RegExp): this {
-    return this.addPredicate(createFind(needle));
   }
 
   raw(re: RegExp): this {

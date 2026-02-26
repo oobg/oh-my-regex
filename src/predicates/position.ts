@@ -63,14 +63,11 @@ export function createEndsWith(needle: string | RegExp): PredicateMeta {
   );
 }
 
-export function createIncludes(
-  needle: string | number | RegExp,
-  displayName?: string
-): PredicateMeta {
+export function createIncludes(needle: string | number | RegExp): PredicateMeta {
   const effective = typeof needle === "number" ? String(needle) : needle;
-  const defaultName = `includes(${effective instanceof RegExp ? effective.source : JSON.stringify(needle)})`;
+  const name = `includes(${effective instanceof RegExp ? effective.source : JSON.stringify(needle)})`;
   return buildPositionPredicate(
-    displayName ?? defaultName,
+    name,
     (input, opts) => {
       if (typeof effective === "string" && effective === "") return true;
       const re =
@@ -81,10 +78,4 @@ export function createIncludes(
     },
     typeof effective === "string" ? (effective === "" ? "" : escapeForRegex(effective)) : null
   );
-}
-
-/** Same semantics as includes(needle); used for find(needle) chain with "find(...)" in report. */
-export function createFind(needle: string | number | RegExp): PredicateMeta {
-  const name = `find(${needle instanceof RegExp ? needle.source : JSON.stringify(needle)})`;
-  return createIncludes(needle, name);
 }

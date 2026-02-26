@@ -108,30 +108,15 @@ describe("startsWith / endsWith / includes", () => {
     expect(regexly("hello").includes("ell").ok()).toBe(true);
     expect(regexly("hello").includes("xyz").ok()).toBe(false);
   });
-  it("find (same semantics as includes)", () => {
-    expect(regexly("hello").find("ell").ok()).toBe(true);
-    expect(regexly("hello").find("xyz").ok()).toBe(false);
-    expect(regexly("hello").find(/l{2}/).ok()).toBe(true);
-  });
-  it("includes and find accept number (coerced to string)", () => {
+  it("includes accepts number (coerced to string)", () => {
     expect(regexly("a5b").includes(5).ok()).toBe(true);
-    expect(regexly("a5b").find(5).ok()).toBe(true);
     expect(regexly("abc").includes(5).ok()).toBe(false);
-    expect(regexly("abc").find(5).ok()).toBe(false);
-    expect(regexly("x").find(5).report().failed.map((f) => f.name)).toContain("find(5)");
-  });
-  it("find appears as find(...) in report", () => {
-    const r = regexly("hello").find("ell").report();
-    expect(r.ok).toBe(true);
-    expect(r.passed).toContain('find("ell")');
-    const failed = regexly("hello").find("xyz").report();
-    expect(failed.failed).toContainEqual({ name: 'find("xyz")' });
+    expect(regexly("x").includes(5).report().failed.map((f) => f.name)).toContain("includes(5)");
   });
   it("empty needle always passes", () => {
     expect(regexly("x").startsWith("").ok()).toBe(true);
     expect(regexly("x").endsWith("").ok()).toBe(true);
     expect(regexly("x").includes("").ok()).toBe(true);
-    expect(regexly("x").find("").ok()).toBe(true);
   });
   it("escapes string needle for regex", () => {
     expect(regexly("a.b").startsWith("a.b").ok()).toBe(true);
@@ -219,12 +204,6 @@ describe("ok() vs report() consistency", () => {
     );
     expect(regexly("hello").includes("ell").ok()).toBe(
       regexly("hello").includes("ell").report().ok
-    );
-    expect(regexly("hello").find("ell").ok()).toBe(
-      regexly("hello").find("ell").report().ok
-    );
-    expect(regexly("hello").find("xyz").ok()).toBe(
-      regexly("hello").find("xyz").report().ok
     );
     expect(regexly("123").raw(/\d{3}/).ok()).toBe(regexly("123").raw(/\d{3}/).report().ok);
   });
